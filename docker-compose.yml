@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  mockserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ["/mockserver"]
+    command: ["-addr", ":9090", "-fail", "0.0"]
+    ports:
+      - "9090:9090"
+    networks:
+      - jobnet
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      LISTEN_ADDR:       ":8080"
+      DOWNSTREAM_ADDR:   "mockserver:9090"
+      POOL_SIZE:         "5"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mockserver
+    networks:
+      - jobnet
+
+networks:
+  jobnet:
+    driver: bridge

@@ -1,0 +1,19 @@
+# Binaries
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test artefacts
+coverage.out
+coverage.html
+*.test
+
+# Go workspace files
+go.sum
+
+# OS
+.DS_Store
+*.swp
+*.swo
